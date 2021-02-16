@@ -1,5 +1,6 @@
 import random
 from typing import List, Dict
+from scipy.stats import pearsonr
 
 
 def generate_character(target_points: int) -> Dict[str, int]:
@@ -25,10 +26,19 @@ def generate_character(target_points: int) -> Dict[str, int]:
     return character
 
 
+def generate_character_pair(target_points: int, max_correlation_coeff: float):
+    char1 = generate_character(target_points)
+    while True:
+        char2 = generate_character(target_points)
+        r, _ = pearsonr([char1[x] for x in char1], [char2[x] for x in char2])
+        if r <= max_correlation_coeff:
+            return char1, char2
+
+
 def main():
-    for i in range(2):
-        character = generate_character(10)
-        print(character)
+    char1, char2 = generate_character_pair(10, -0.05)
+    print(char1)
+    print(char2)
 
 
 if __name__ == '__main__':
