@@ -32,13 +32,14 @@ def generate_character_pair(target_points: int, max_correlation_coeff: float):
         char2 = generate_character(target_points)
         r, _ = pearsonr([char1[x] for x in char1], [char2[x] for x in char2])
         if r <= max_correlation_coeff:
-            return char1, char2
+            return char1, char2, r
 
 
 def main():
-    char1, char2 = generate_character_pair(10, -0.05)
+    char1, char2, r = generate_character_pair(10, -0.10)
     print(char1)
     print(char2)
+    print(r)
 
 
 if __name__ == '__main__':
